@@ -1,0 +1,19 @@
+#Eureka
+Help to find microservices to each other
+Each Service will register itself to Eureka.
+API Gateway will ask Eureka for the services and then it will route the request to the respective service.
+API Gateway will be the single point of entry for all the services.
+API Gateway works as a laod balancer.
+
+# High Availability using eureka server as a client
+# Property Place holder resulation
+
+# Dev tools - hot swapping
+
+# Spring API gateway : Central entry point for all the services
+  # API Gateway
+  # routes client request to the respective service
+  # Inbuild load balancer distributes client requets btween multiple instances of the service
+  # Proxy services
+
+# Presentation Layer / Service Layer / Persitance Layer

@@ -1,0 +1,49 @@
+server:
+  port: 8082
+
+### Eureka Configuration ###
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8010/eureka/
+
+### Gateway Routes Configuration ###
+# List of routes to be configured.
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+          routes:
+            - id: user-service-status-check
+              uri: lb://user-service
+              predicates:
+                - Path=/users/status/check
+                - Method=GET  # Comma separated list of HTTP methods.
+              filters:
+                - RemoveRequestHeader=Cookie
+                - AuthorizationHeaderFilter=ROLE_ADMIN
+
+            - id: user-service-status-check-rewrite
+              uri: lb://user-service
+              predicates:
+                    - Path=/user-mgmt/users/status/check
+              filters:
+                    - RemoveRequestHeader=Cookie
+                    - RewritePath=/user-mgmt/(?<segment>.*), /$\{segment}
+#    discovery:
+#      locator:
+#        enabled: true
+#        lower-case-service-id: true
+
+
+## Acutator Configuration ##
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+token:
+  expiration_time: 3600000
+  secret: dgjorufhrsnjdu438fkdj38fdmcv7dm3ckvhrsnjjuwelueivhe848fhedldh5ndk
